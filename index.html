@@ -49,6 +49,11 @@
                     Login
                 </a>
             </div>
+
+            <!-- Botão Menu Mobile -->
+            <button id="mobile-menu-btn" class="md:hidden text-slate-700 hover:text-blue-600 transition-colors p-2">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
         </div>
     </nav>
 
@@ -484,6 +489,92 @@ b            <!-- Overlay Profissional (Escuro para contraste e leitura) -->
         </div>
     </footer>
 
+    <!-- Menu Off-Canvas Mobile -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] hidden">
+        <!-- Backdrop (Fundo escuro) -->
+        <div id="mobile-menu-backdrop" class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+        
+        <!-- Painel Lateral -->
+        <div id="mobile-menu-panel" class="absolute right-0 top-0 h-full w-[80%] max-w-sm bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+            <div class="p-6 flex items-center justify-between border-b border-slate-100 h-20">
+                <span class="font-extrabold text-xl tracking-tight text-slate-800 uppercase">MATENG</span>
+                <button id="close-menu-btn" class="text-slate-500 hover:text-red-500 transition-colors p-2">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto py-6 px-6 flex flex-col gap-6">
+                <a href="#" class="mobile-link text-lg font-semibold text-slate-700 hover:text-blue-600">Início</a>
+                <a href="#sobre" class="mobile-link text-lg font-semibold text-slate-700 hover:text-blue-600">Sobre a Mateng</a>
+                <a href="#servicos" class="mobile-link text-lg font-semibold text-slate-700 hover:text-blue-600">Serviços</a>
+                <a href="#contato" class="mobile-link text-lg font-semibold text-slate-700 hover:text-blue-600">Contato</a>
+                
+                <hr class="border-slate-100 my-2">
+                
+                <a href="#" class="flex items-center gap-2 text-slate-600 font-medium hover:text-blue-600">
+                    <i data-lucide="user" class="w-5 h-5"></i> Login
+                </a>
+                
+                <!-- Seletor de Idioma Mobile -->
+                <div class="flex gap-3 mt-4">
+                    <a href="#" class="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:border-blue-500 hover:text-blue-600 transition-colors">🇧🇷 PT</a>
+                    <a href="#" class="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:border-blue-500 hover:text-blue-600 transition-colors">🇺🇸 EN</a>
+                    <a href="#" class="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:border-blue-500 hover:text-blue-600 transition-colors">🇪🇸 ES</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
+    <script>
+        // Lógica do Menu Off-Canvas
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const backdrop = document.getElementById('mobile-menu-backdrop');
+        const panel = document.getElementById('mobile-menu-panel');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            
+            if (isHidden) {
+                // Abrir Menu
+                mobileMenu.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Bloqueia rolagem do site
+                
+                // Pequeno delay para a transição CSS funcionar após remover o hidden
+                requestAnimationFrame(() => {
+                    backdrop.classList.remove('opacity-0');
+                    panel.classList.remove('translate-x-full');
+                });
+            } else {
+                // Fechar Menu
+                backdrop.classList.add('opacity-0');
+                panel.classList.add('translate-x-full');
+                
+                // Espera a transição terminar (300ms) para esconder a div
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                    document.body.style.overflow = ''; // Libera rolagem
+                }, 300);
+            }
+        }
+
+        // Event Listeners
+        mobileBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        backdrop.addEventListener('click', toggleMenu);
+
+        // Fechar ao clicar em um link
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
+        // Atualizar ícones Lucide (caso necessário para os novos elementos)
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    </script>
 </body>
 </html>
