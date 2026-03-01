@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+:root {
+    --yellow-glow: rgba(253, 224, 71, 0.6);
+    --yellow-strong: #eab308;
+    --cable-color: #1f2937;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    scroll-behavior: smooth;
+}
+
+.glass-header {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.service-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+}
+
+.gradient-text {
+    background: #2563eb;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bg-grid {
+    background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+/* --- Nova Barra de Progresso e Efeitos --- */
+
+/* Efeito Easter Egg: Aura de luz sob o rato */
+#mouseGlow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, var(--yellow-glow) 0%, rgba(253, 224, 71, 0.1) 45%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 999;
+    transform: translate(-50%, -50%);
+    display: none;
+    mix-blend-mode: soft-light;
+}
+
+body.energy-active #mouseGlow {
+    display: block;
+}
