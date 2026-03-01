@@ -2,12 +2,25 @@
 lucide.createIcons();
 
 const mouseGlow = document.getElementById('mouseGlow');
+const heroSection = document.getElementById('hero-section');
 
-// Rastreamento do brilho do rato
-window.addEventListener('mousemove', (e) => {
-    mouseGlow.style.left = e.clientX + 'px';
-    mouseGlow.style.top = e.clientY + 'px';
-});
+// Rastreamento do brilho do rato (Apenas no Hero)
+if (mouseGlow && heroSection) {
+    heroSection.addEventListener('mousemove', (e) => {
+        // Calcula a posição relativa à seção Hero
+        const rect = heroSection.getBoundingClientRect();
+        mouseGlow.style.left = (e.clientX - rect.left) + 'px';
+        mouseGlow.style.top = (e.clientY - rect.top) + 'px';
+    });
+
+    heroSection.addEventListener('mouseenter', () => {
+        mouseGlow.style.opacity = '1';
+    });
+
+    heroSection.addEventListener('mouseleave', () => {
+        mouseGlow.style.opacity = '0';
+    });
+}
 
 // Lógica de Scroll
 window.addEventListener('scroll', () => {

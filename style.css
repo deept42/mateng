@@ -41,7 +41,7 @@ body {
 
 /* Efeito Easter Egg: Aura de luz sob o rato */
 #mouseGlow {
-    position: fixed;
+    position: absolute; /* Mudado de fixed para absolute */
     top: 0;
     left: 0;
     width: 450px;
@@ -49,12 +49,83 @@ body {
     background: radial-gradient(circle, var(--yellow-glow) 0%, rgba(253, 224, 71, 0.1) 45%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 999;
+    z-index: 5; /* Acima do fundo (z-0) mas abaixo do conteúdo (z-10) */
     transform: translate(-50%, -50%);
-    display: none;
     mix-blend-mode: soft-light;
+    opacity: 0; /* Invisível por padrão */
+    transition: opacity 0.5s ease; /* Fade suave ao entrar/sair */
 }
 
-body.energy-active #mouseGlow {
-    display: block;
+/* --- Botão Flutuante WhatsApp --- */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #25d366;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 50; /* Acima do conteúdo, mesmo nível do menu desktop */
+    transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    background-color: #128c7e;
+    transform: scale(1.1) translateY(-5px);
+}
+
+.whatsapp-pulse {
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+/* Balão de Mensagem do WhatsApp */
+.whatsapp-bubble {
+    position: absolute;
+    right: 75px; /* Posiciona à esquerda do botão */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    color: #1f2937;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 800;
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    animation: bubbleFadeIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1s; /* Delay de 1s para aparecer */
+    pointer-events: none; /* Permite clicar através do balão se necessário */
+}
+
+.whatsapp-bubble::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid white;
+}
+
+@keyframes bubbleFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-20px, -50%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0, -50%);
+    }
 }
